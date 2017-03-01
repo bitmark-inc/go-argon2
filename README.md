@@ -22,7 +22,7 @@ library on FreeBSD.
 ~~Otherwise, get this package without installing it directly and use the library
 submodule in this repository:~~
 
-> ```
+```
 $ go get -d github.com/bitmark-inc/go-argon2
 $ cd $GOPATH/src/github.com/bitmark-inc/go-argon2
 $ git submodule update --init
@@ -59,9 +59,9 @@ ctx := &argon2.Context{
 }
 
 s, err := argon2.HashEncoded(ctx, []byte("password"), []byte("somesalt"))
+
 if err != nil {
 	log.Fatal(err)
 }
-
 fmt.Println(s)
 ```
