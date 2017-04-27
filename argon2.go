@@ -6,8 +6,7 @@
 // both side-channel and GPU cracking attacks.
 package argon2
 
-// #cgo CFLAGS: -I/usr/local/include
-// #cgo LDFLAGS: -L/usr/local/lib -largon2
+// #cgo pkg-config: libargon2
 // #include <stdlib.h>
 // #include <argon2.h>
 import "C"
