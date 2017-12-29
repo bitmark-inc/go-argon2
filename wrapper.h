@@ -2,8 +2,8 @@
 //
 // Go does not allow passing memory containing Go pointers as this
 // would fail when the garbage collector moves things around.  Passing
-// pointers as paramters to a single C call is allowed, so the struct
-// must be instantiates, usesd an freed all within a single C
+// pointers as parameters to a single C call is allowed, so the struct
+// must be instantiated, used an freed all within a single C
 // function.
 int argon2_wrapper(uint8_t *out, uint32_t outlen,
 		   uint8_t *pwd, uint32_t pwdlen,
