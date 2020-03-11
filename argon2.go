@@ -111,6 +111,7 @@ func Verify(ctx *Context, hash, password, salt []byte) (bool, error) {
 // VerifyEncoded verifies an encoded Argon2 hash s against a plaintext password.
 func VerifyEncoded(s string, password []byte) (bool, error) {
 	mode, err := getMode(s)
+
 	if err != nil {
 		return false, err
 	}
@@ -139,6 +140,8 @@ func getMode(s string) (int, error) {
 	switch {
 	case strings.HasPrefix(s, "$argon2d"):
 		return ModeArgon2d, nil
+	case strings.HasPrefix(s, "$argon2id"):
+		return ModeArgon2id, nil
 	case strings.HasPrefix(s, "$argon2i"):
 		return ModeArgon2i, nil
 	case strings.HasPrefix(s, "$argon2id"):

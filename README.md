@@ -7,55 +7,53 @@ Go bindings for the reference C implementation of
 [Password Hash Competition](https://password-hashing.net).
 
 ## Installation
-This package depends on `libargon2`, specifically the ~~static~~ dynamic library
-~~libargon2.a~~ `libargon2.so` and header `argon2.h`. If these are already available in your
-default search paths, you can simply install it directly using `go get`:
 
-```
-$ go get github.com/bitmark-inc/go-argon2
-```
-
-Note: see https://github.com/bitmark-inc/freebsd-ports under the
-`security/libargon2` directory for building and installing the dynamic
-library on FreeBSD.
-
-~~Otherwise, get this package without installing it directly and use the library
-submodule in this repository:~~
-
-```
+~~~
 $ go get -d github.com/bitmark-inc/go-argon2
-$ cd $GOPATH/src/github.com/bitmark-inc/go-argon2
-$ git submodule update --init
-$ cd libargon2
-$ make && make test
-$ go test github.com/bitmark-inc/go-argon2
-```
+~~~
 
-~~Until the library API has stabilized, it's probably better to use the latter
-approach.~~
+This package depends on `libargon2`, specifically `libargon2.so` and
+`argon2.h`.  Make sure the library files are available in `/usr` or
+`/usr/local` depending on your OS.  Check that pkg-config can detect
+the installed library.
+
+~~~
+Debian-like: apt install libargon2-dev
+FreeBSD:     pkg install libargon2
+
+all: pkgconfig --cflags --libs libargon2
+~~~
+
+Test the Go library
+
+~~~
+$ git clone https://github.com/bitmark-inc/go-argon2.git
+$ cd go-argon2
+$ go test -v ./...
+
 
 ## Usage
 ### Raw hash with default configuration
 
-```go
+~~~go
 hash, err := argon2.Hash(argon2.NewContext(), []byte("password"), []byte("somesalt"))
 if err != nil {
 	log.Fatal(err)
 }
 
 fmt.Printf("%x\n", hash)
-```
+~~~
 
 ### Encoded hash with custom configuration
 
-```go
+~~~go
 ctx := &argon2.Context{
 	Iterations:  5,
 	Memory:      1 << 16,
 	Parallelism: 2,
 	HashLen:     32,
 	Mode:        argon2.ModeArgon2i,
-    Version:     argon2.Version13,
+	Version:     argon2.Version13,
 }
 
 s, err := argon2.HashEncoded(ctx, []byte("password"), []byte("somesalt"))
@@ -64,4 +62,4 @@ if err != nil {
 	log.Fatal(err)
 }
 fmt.Println(s)
-```
+~~~
